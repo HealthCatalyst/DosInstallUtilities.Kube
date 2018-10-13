@@ -1,16 +1,16 @@
 <#
   .SYNOPSIS
   GetConfigFile
-  
+
   .DESCRIPTION
   GetConfigFile
-  
+
   .INPUTS
   GetConfigFile - The name of GetConfigFile
 
   .OUTPUTS
   None
-  
+
   .EXAMPLE
   GetConfigFile
 
@@ -28,7 +28,7 @@ function GetConfigFile() {
     )
 
     Write-Verbose 'GetConfigFile: Starting'
-    [hashtable]$Return = @{} 
+    [hashtable]$Return = @{}
 
     [string] $folder = $ENV:CatalystConfigPath
     if ([string]::IsNullOrEmpty("$folder")) {
@@ -38,7 +38,8 @@ function GetConfigFile() {
     if(!(Test-Path $folder -PathType Container)) {
         Write-Host "ScriptRoot:$PSScriptRoot"
         $here = "$PSScriptRoot"
-        $folder = "$here\..\..\..\deployments"
+        $folder = "$here\..\..\..\dos.install\deployments"
+        Write-Host "Looking for config in $folder"
     }
 
     if (Test-Path -Path $folder -PathType Container) {
@@ -51,12 +52,12 @@ function GetConfigFile() {
             Write-Host "Choose config file from $folder"
             for ($i = 1; $i -le $files.count; $i++) {
                 Write-Host "$i. $($($files[$i-1]).Name)"
-            }    
+            }
             Write-Host "-------------"
 
             Do { $index = Read-Host "Enter number of file to use (1 - $($files.count))"}
-            while ([string]::IsNullOrWhiteSpace($index)) 
-            
+            while ([string]::IsNullOrWhiteSpace($index))
+
             $Return.FilePath = $($($files[$index - 1]).FullName)
             return $Return
         }
@@ -68,7 +69,7 @@ function GetConfigFile() {
     Write-Information -MessageData "Sample config file: https://raw.githubusercontent.com/HealthCatalyst/dos.install/master/deployments/sample.json"
     Do { $fullpath = Read-Host "Type full path to config file: "}
     while ([string]::IsNullOrWhiteSpace($fullpath))
-    
+
     $Return.FilePath = $fullpath
     Write-Verbose 'GetConfigFile: Done'
     return $Return
