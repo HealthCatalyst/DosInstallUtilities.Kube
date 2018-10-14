@@ -73,16 +73,16 @@ function InstallLoadBalancerHelmPackage() {
 
     Start-Sleep -Seconds 5
 
-    InstallHelmPackage  -namespace "kube-system" `
-        -package $package `
-        -packageUrl $packageUrl `
-        -Ssl $Ssl `
-        -ExternalIP $ExternalIP `
-        -InternalIP $InternalIP `
-        -ExternalSubnet $ExternalSubnet `
-        -InternalSubnet $InternalSubnet `
-        -IngressInternalType $IngressInternalType `
-        -IngressExternalType $IngressExternalType
+    # InstallHelmPackage  -namespace "kube-system" `
+    #     -package $package `
+    #     -packageUrl $packageUrl `
+    #     -Ssl $Ssl `
+    #     -ExternalIP $ExternalIP `
+    #     -InternalIP $InternalIP `
+    #     -ExternalSubnet $ExternalSubnet `
+    #     -InternalSubnet $InternalSubnet `
+    #     -IngressInternalType $IngressInternalType `
+    #     -IngressExternalType $IngressExternalType
 
     Write-Verbose 'InstallLoadBalancerHelmPackage: Done'
 }

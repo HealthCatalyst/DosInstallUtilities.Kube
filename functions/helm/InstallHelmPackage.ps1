@@ -81,6 +81,8 @@ function InstallHelmPackage() {
 
     # Start-Sleep -Seconds 5
 
+    # https://docs.helm.sh/developing_charts/
+
     Write-Output "Install helm package from $packageUrl"
     helm install $packageUrl `
         --name $package `

@@ -17,7 +17,7 @@ Describe "$filename Unit Tests" -Tags 'Unit' {
 
 Describe "$filename Integration Tests" -Tags 'Integration' {
     It "Can install Helm Package for realtime" {
-        $packageUrl = "https://raw.githubusercontent.com/HealthCatalyst/helm.loadbalancer/master/fabricloadbalancer-1.0.0.tgz"
+        $packageUrl = $globals.loadbalancerPackageUrl
 
         InstallHelmPackage `
             -namespace "fabricrealtime" `

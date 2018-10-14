@@ -7,7 +7,7 @@ Describe "$filename Unit Tests" -Tags 'Unit' {
 
 Describe "$filename Integration Tests" -Tags 'Integration' {
     It "Can Install FabricRealtime Stack" {
-        $packageUrl = "https://raw.githubusercontent.com/HealthCatalyst/helm.realtime/master/fabricrealtime-1.0.0.tgz"
+        $packageUrl = $globals.realtimePackageUrl
         $namespace="fabricrealtime"
 
         # Arrange
