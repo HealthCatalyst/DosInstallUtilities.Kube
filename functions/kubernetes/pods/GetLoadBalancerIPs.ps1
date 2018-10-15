@@ -34,7 +34,7 @@ function GetLoadBalancerIPs() {
     Write-Host "Waiting for IP to get assigned to the load balancer (Note: It can take upto 5 minutes for Azure to finish creating the load balancer)"
     Do {
         $counter = $counter + 1
-        [string] $externalIP = $(kubectl get svc -l "k8s-app-external=traefik-ingress-lb" -n "kube-system" -o jsonpath='{.items[].status.loadBalancer.ingress[].ip}')
+        [string] $externalIP = $(kubectl get svc -l "app=nginx-ingress" -n "kube-system" -o jsonpath='{.items[].status.loadBalancer.ingress[].ip}')
         if (!$externalIP) {
             Write-Host -NoNewLine "${counter}0 "
             Start-Sleep -Seconds 10
@@ -54,7 +54,7 @@ function GetLoadBalancerIPs() {
     Write-Host "Waiting for IP to get assigned to the internal load balancer (Note: It can take upto 5 minutes for Azure to finish creating the load balancer)"
     Do {
         $counter = $counter + 1
-        [string] $internalIP = $(kubectl get svc -l "k8s-app-internal=traefik-ingress-lb" -n kube-system -o jsonpath='{.items[].status.loadBalancer.ingress[].ip}')
+        [string] $internalIP = $(kubectl get svc -l "app=nginx-ingress" -n kube-system -o jsonpath='{.items[].status.loadBalancer.ingress[].ip}')
         if (!$internalIP) {
             Write-Host -NoNewLine "${counter}0 "
             Start-Sleep -Seconds 10

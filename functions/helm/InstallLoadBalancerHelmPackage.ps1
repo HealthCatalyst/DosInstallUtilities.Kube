@@ -24,54 +24,24 @@ function InstallLoadBalancerHelmPackage() {
     param
     (
         [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [string]
-        $packageUrl
-        ,
-        [Parameter(Mandatory = $true)]
-        [bool]
-        $Ssl
-        ,
-        [Parameter(Mandatory = $true)]
         [string]
         $ExternalIP
-        ,
-        [Parameter(Mandatory = $false)]
-        [AllowEmptyString()]
-        [string]
-        $InternalIP
-        ,
-        [Parameter(Mandatory = $false)]
-        [AllowEmptyString()]
-        [string]
-        $ExternalSubnet
-        ,
-        [Parameter(Mandatory = $false)]
-        [AllowEmptyString()]
-        [string]
-        $InternalSubnet
-        ,
-        [Parameter(Mandatory = $true)]
-        [string]
-        $IngressInternalType
-        ,
-        [Parameter(Mandatory = $true)]
-        [string]
-        $IngressExternalType
     )
 
     Write-Verbose 'InstallLoadBalancerHelmPackage: Starting'
 
-    [string] $package = "fabricloadbalancer"
+    [string] $package = "nginx"
 
     Write-Output "Removing old deployment"
     helm del --purge $package
 
     Start-Sleep -Seconds 5
 
-    kubectl delete 'pods,services,configMaps,deployments,ingress' -l k8s-traefik=traefik -n kube-system --ignore-not-found=true
-
-    Start-Sleep -Seconds 5
+    # install nginx
+    helm install stable/nginx-ingress `
+	--namespace "kube-system" `
+	--name "nginx" `
+    --set controller.service.loadBalancerIP="$ExternalIP"
 
     # InstallHelmPackage  -namespace "kube-system" `
     #     -package $package `
