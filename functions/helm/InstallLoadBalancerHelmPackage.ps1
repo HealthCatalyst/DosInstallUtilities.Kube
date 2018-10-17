@@ -24,35 +24,60 @@ function InstallLoadBalancerHelmPackage() {
     param
     (
         [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
         [string]
         $ExternalIP
+        ,
+        [Parameter(Mandatory = $true, HelpMessage="Set this if you want to put the external load balancer in a subnet")]
+        [AllowEmptyString()]
+        [string]
+        $ExternalSubnet
+        ,
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $InternalIP
+        ,
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $InternalSubnet
     )
 
     Write-Verbose 'InstallLoadBalancerHelmPackage: Starting'
 
     [string] $package = "nginx"
+    [string] $packageInternal = "nginx-internal"
+    [string] $ngniximageTag = "0.20.0"
 
     Write-Output "Removing old deployment"
     helm del --purge $package
+    helm del --purge $packageInternal
 
     Start-Sleep -Seconds 5
 
-    # install nginx
-    helm install stable/nginx-ingress `
-	--namespace "kube-system" `
-	--name "nginx" `
-    --set controller.service.loadBalancerIP="$ExternalIP"
+    # nginx configuration: https://github.com/helm/charts/tree/master/stable/nginx-ingress#configuration
 
-    # InstallHelmPackage  -namespace "kube-system" `
-    #     -package $package `
-    #     -packageUrl $packageUrl `
-    #     -Ssl $Ssl `
-    #     -ExternalIP $ExternalIP `
-    #     -InternalIP $InternalIP `
-    #     -ExternalSubnet $ExternalSubnet `
-    #     -InternalSubnet $InternalSubnet `
-    #     -IngressInternalType $IngressInternalType `
-    #     -IngressExternalType $IngressExternalType
+    Write-Verbose "Installing the public nginx load balancer"
+    helm install stable/nginx-ingress `
+        --namespace "kube-system" `
+        --name "$package" `
+        --set controller.image.tag="$ngniximageTag" `
+        --set controller.service.loadBalancerIP="$ExternalIP"
+
+    # setting values in helm: https://github.com/helm/helm/blob/master/docs/chart_best_practices/values.md
+    # and https://github.com/helm/helm/blob/master/docs/using_helm.md
+    # use "helm inspect values" to see values
+
+    Write-Verbose "Installing the internal nginx load balancer"
+    # NOTE: helm cannot handle spaces before or after "=" in --set command
+    helm install stable/nginx-ingress `
+        --namespace "kube-system" `
+        --name "$packageInternal" `
+        --set controller.image.tag="$ngniximageTag" `
+        --set-string controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal"='"true"' `
+        --set-string controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet"='"'$InternalSubnet'"' `
+        --set controller.service.loadBalancerIP="$InternalIP"
 
     Write-Verbose 'InstallLoadBalancerHelmPackage: Done'
 }

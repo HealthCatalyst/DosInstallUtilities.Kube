@@ -117,6 +117,9 @@ function InstallStackInKubernetes() {
 
     WaitForPodsInNamespace -namespace $namespace -interval 5 -Verbose
 
+    # read tcp ports and update ngnix with those ports
+    SetTcpPortsForStack -namespace $namespace
+
     Write-Verbose 'InstallStackInKubernetes: Done'
     return $Return
 }

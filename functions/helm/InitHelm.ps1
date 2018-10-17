@@ -1,16 +1,16 @@
 <#
   .SYNOPSIS
   InitHelm
-  
+
   .DESCRIPTION
   InitHelm
-  
+
   .INPUTS
   InitHelm - The name of InitHelm
 
   .OUTPUTS
   None
-  
+
   .EXAMPLE
   InitHelm
 
@@ -38,6 +38,9 @@ function InitHelm()
   helm init --service-account tiller
 
   helm init --upgrade --service-account tiller
+
+  Write-Host "Sleeping for 5 seconds"
+  Start-Sleep -Seconds 5
 
   Write-Verbose 'InitHelm: Done'
 
