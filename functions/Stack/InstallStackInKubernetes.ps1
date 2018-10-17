@@ -104,14 +104,7 @@ function InstallStackInKubernetes() {
 
     InstallHelmPackage  -namespace $namespace `
         -package $package `
-        -packageUrl $packageUrl `
-        -Ssl $Ssl `
-        -ExternalIP $ExternalIP `
-        -InternalIP $InternalIP `
-        -ExternalSubnet $ExternalSubnet `
-        -InternalSubnet $InternalSubnet `
-        -IngressInternalType $IngressInternalType `
-        -IngressExternalType $IngressExternalType
+        -packageUrl $packageUrl
 
     Write-Verbose 'InstallLoadBalancerHelmPackage: Done'
 

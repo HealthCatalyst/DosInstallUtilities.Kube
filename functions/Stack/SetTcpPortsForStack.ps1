@@ -34,6 +34,35 @@ function SetTcpPortsForStack()
 
     # read services with label expose=external
 
+    $result = $(GetTcpServices -namespace $namespace)
+    foreach ($item in $result.ExternalServices) {
+        $service = $item
+
+        AssertStringIsNotNullOrEmpty $service.servicename
+
+        Write-Verbose "External: Adding TCP port: tcp.$($service.port)=$namespace/$($service.servicename):$($service.targetPort) "
+
+        $package="nginx"
+        helm upgrade "$package" stable/nginx-ingress `
+        --reuse-values `
+        --namespace kube-system `
+        --set-string "tcp.$($service.port)=$namespace/$($service.servicename):$($service.targetPort)"
+    }
+
+    foreach ($item in $result.InternalServices) {
+        [Service]$service = $item
+
+        AssertStringIsNotNullOrEmpty $service.servicename
+
+        Write-Verbose "Internal: Adding TCP port: tcp.$($service.port)=$namespace/$($service.servicename):$($service.targetPort) "
+
+        $package="nginx-internal"
+        helm upgrade "$package" stable/nginx-ingress `
+        --reuse-values `
+        --namespace kube-system `
+        --set-string "tcp.$($service.port)=$namespace/$($service.servicename):$($service.targetPort)"
+    }
+
     # update nginx with these ports
 
     Write-Verbose 'SetTcpPortsForStack: Done'

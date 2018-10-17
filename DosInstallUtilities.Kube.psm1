@@ -1,3 +1,5 @@
+# classes
+. $PSScriptRoot\classes\Service.ps1
 
 # kubernetes\cluster
 . $PSScriptRoot\functions\kubernetes\cluster\ShowStatusOfCluster.ps1
@@ -35,7 +37,7 @@
 . $PSScriptRoot\functions\kubernetes\dns\RestartDNSPodsIfNeeded.ps1
 
 # kubernetes\services
-. $PSScriptRoot\functions\kubernetes\services\GetServicesWithExternalLabel.ps1
+. $PSScriptRoot\functions\kubernetes\services\GetTcpServices.ps1
 
 # helm
 . $PSScriptRoot\functions\helm\InitHelm.ps1

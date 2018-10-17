@@ -9,8 +9,6 @@ Describe "$filename Unit Tests" -Tags 'Unit' {
 Describe "$filename Integration Tests" -Tags 'Integration' {
     It "Can Install FabricRealtime Stack" {
 
-        $packageUrl = $globals.realtimePackageUrl
-
         $packageUrl = "$here\..\..\..\helm.realtime\fabricrealtime"
 
         $packageUrl | Should Exist

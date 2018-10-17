@@ -37,37 +37,6 @@ function InstallHelmPackage() {
         [ValidateNotNullOrEmpty()]
         [string]
         $packageUrl
-        ,
-        [Parameter(Mandatory = $true)]
-        [bool]
-        $Ssl
-        ,
-        [Parameter(Mandatory = $true)]
-        [string]
-        $ExternalIP
-        ,
-        [Parameter(Mandatory = $false)]
-        [AllowEmptyString()]
-        [string]
-        $InternalIP
-        ,
-        [Parameter(Mandatory = $false)]
-        [AllowEmptyString()]
-        [string]
-        $ExternalSubnet
-        ,
-        [Parameter(Mandatory = $false)]
-        [AllowEmptyString()]
-        [string]
-        $InternalSubnet
-        ,
-        [Parameter(Mandatory = $true)]
-        [string]
-        $IngressInternalType
-        ,
-        [Parameter(Mandatory = $true)]
-        [string]
-        $IngressExternalType
     )
 
     Write-Verbose "InstallHelmPackage: Starting $package"
@@ -87,13 +56,6 @@ function InstallHelmPackage() {
     helm install $packageUrl `
         --name $package `
         --namespace $namespace `
-        --set ssl=$Ssl `
-        --set ExternalIP="$ExternalIP" `
-        --set InternalIP="$InternalIP" `
-        --set ExternalSubnet="$ExternalSubnet" `
-        --set InternalSubnet="$InternalSubnet" `
-        --set ingressInternalType="$IngressInternalType" `
-        --set ingressExternalType="$IngressExternalType" `
         --debug
 
     Write-Verbose "Listing packages"

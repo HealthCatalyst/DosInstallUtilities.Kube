@@ -21,4 +21,5 @@ Invoke-Pester "$here\Module.Tests.ps1"
 
 # Invoke-Pester "$here\functions\Stack\InstallStackInKubernetes.Tests.ps1" -Verbose
 
-Invoke-Pester "$here\functions\kubernetes\services\GetServicesWithExternalLabel.Tests.ps1" -Verbose
+Invoke-Pester "$here\functions\kubernetes\services\GetTcpServices.Tests.ps1" -Verbose
+Invoke-Pester "$here\functions\Stack\SetTcpPortsForStack.Tests.ps1" -Verbose
