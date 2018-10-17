@@ -63,7 +63,8 @@ function InstallLoadBalancerHelmPackage() {
         --namespace "kube-system" `
         --name "$package" `
         --set controller.image.tag="$ngniximageTag" `
-        --set controller.service.loadBalancerIP="$ExternalIP"
+        --set controller.service.loadBalancerIP="$ExternalIP" `
+        --set-string controller.service.labels."$($globals.externalLoadBalancerLabel)"='"'$($globals.externalLoadBalancerLabelValue)'"'
 
     # setting values in helm: https://github.com/helm/helm/blob/master/docs/chart_best_practices/values.md
     # and https://github.com/helm/helm/blob/master/docs/using_helm.md
@@ -77,7 +78,8 @@ function InstallLoadBalancerHelmPackage() {
         --set controller.image.tag="$ngniximageTag" `
         --set-string controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal"='"true"' `
         --set-string controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet"='"'$InternalSubnet'"' `
-        --set controller.service.loadBalancerIP="$InternalIP"
+        --set controller.service.loadBalancerIP="$InternalIP" `
+        --set-string controller.service.labels."$($globals.internalLoadBalancerLabel)"='"'$($globals.internalLoadBalancerLabelValue)'"'
 
     Write-Verbose 'InstallLoadBalancerHelmPackage: Done'
 }
