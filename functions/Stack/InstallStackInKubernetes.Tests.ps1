@@ -26,7 +26,6 @@ Describe "$filename Integration Tests" -Tags 'Integration' {
             -package "fabricrealtime" `
             -packageUrl $packageUrl `
             -Ssl $false `
-            -customerid "test" `
             -ExternalIP "104.42.148.128" `
             -InternalIP "" `
             -ExternalSubnet "" `

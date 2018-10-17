@@ -41,11 +41,8 @@
 
 # Stack
 . $PSScriptRoot\functions\Stack\Merge-Tokens.ps1
-. $PSScriptRoot\functions\Stack\ReadYamlAndReplaceTokens.ps1
-. $PSScriptRoot\functions\Stack\DeployYamlFile.ps1
-. $PSScriptRoot\functions\Stack\DeployYamlFiles.ps1
 . $PSScriptRoot\functions\Stack\InstallStackInKubernetes.ps1
-. $PSScriptRoot\functions\Stack\LoadLoadBalancerStack.ps1
+. $PSScriptRoot\functions\Stack\SetTcpPortsForStack.ps1
 
 # helpers
 . $PSScriptRoot\functions\helpers\HasProperty.ps1
