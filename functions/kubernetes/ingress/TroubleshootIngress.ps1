@@ -33,7 +33,7 @@ function TroubleshootIngress() {
     $ingresses = $(kubectl get ingress -n $namespace -o jsonpath='{.items[*].metadata.name}')
     foreach ($ingress in $ingresses.Split(" ")) {
         $ingressPath = $(kubectl get ing $ingress -n $namespace -o jsonpath="{.spec.rules[].http.paths[].path}")
-        $ingressHost = $(kubectl get ing $ingress -n $namespace -o jsonpath="{.spec.rules[].host}")
+        $ingressHost = $(kubectl get ing $ingress -n $namespace -o jsonpath='{.spec.rules[].host}')
         $ingressRuleType = $(kubectl get ing $ingress -n $namespace -o jsonpath="{.metadata.annotations.traefik\.frontend\.rule\.type}")
         $ingressType = $(kubectl get ing $ingress -n $namespace -o jsonpath="{.metadata.labels.expose}")
         Write-Host "=============== Ingress: $ingress ================="

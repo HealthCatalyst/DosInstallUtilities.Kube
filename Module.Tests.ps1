@@ -24,6 +24,10 @@ Describe "$module Tests" {
         $null = [System.Management.Automation.PSParser]::Tokenize($psFile, [ref]$errors)
         $errors.Count | Should Be 0
     }
+    It "$module has no syntax errors" {
+        $psFile = Get-Content -Path "$here\$module.psm1" -ErrorAction Stop
+        Test-Script -script $psFile
+    }
 
     $files = $(Get-ChildItem -Path $functionFolder -Recurse -File | Where {$_.Name -notcontains "Tests.ps1"} | % { $_.FullName })
 
@@ -54,6 +58,10 @@ Describe "$module Tests" {
                     $errors = $null
                     $null = [System.Management.Automation.PSParser]::Tokenize($psFile, [ref]$errors)
                     $errors.Count | Should Be 0
+                }
+                It "$function.ps1 has no syntax errors" {
+                    $psFile = Get-Content -Path "$functionFolder\$function.ps1" -ErrorAction Stop
+                    Test-Script -script $psFile
                 }
             }
             Context "$function has tests" {
