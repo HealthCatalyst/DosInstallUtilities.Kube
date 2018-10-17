@@ -34,6 +34,9 @@
 # kubernetes\dns
 . $PSScriptRoot\functions\kubernetes\dns\RestartDNSPodsIfNeeded.ps1
 
+# kubernetes\services
+. $PSScriptRoot\functions\kubernetes\services\GetServicesWithExternalLabel.ps1
+
 # helm
 . $PSScriptRoot\functions\helm\InitHelm.ps1
 . $PSScriptRoot\functions\helm\InstallHelmPackage.ps1

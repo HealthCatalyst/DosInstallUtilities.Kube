@@ -1,4 +1,5 @@
 $filename = $($(Split-Path -Leaf $MyInvocation.MyCommand.Path).Replace(".Tests.ps1",""))
+$here = Split-Path -Parent $MyInvocation.MyCommand.Path
 
 Describe "$filename Unit Tests" -Tags 'Unit' {
     It "TestMethod" {
@@ -7,7 +8,13 @@ Describe "$filename Unit Tests" -Tags 'Unit' {
 
 Describe "$filename Integration Tests" -Tags 'Integration' {
     It "Can Install FabricRealtime Stack" {
+
         $packageUrl = $globals.realtimePackageUrl
+
+        $packageUrl = "$here\..\..\..\helm.realtime\fabricrealtime"
+
+        $packageUrl | Should Exist
+
         $namespace="fabricrealtime"
 
         # Arrange

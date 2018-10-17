@@ -19,4 +19,6 @@ Invoke-Pester "$here\Module.Tests.ps1"
 
 # Invoke-Pester "$here\functions\LaunchKubernetesDashboard.Tests.ps1" -Verbose
 
-Invoke-Pester "$here\functions\Stack\InstallStackInKubernetes.Tests.ps1" -Verbose
+# Invoke-Pester "$here\functions\Stack\InstallStackInKubernetes.Tests.ps1" -Verbose
+
+Invoke-Pester "$here\functions\kubernetes\services\GetServicesWithExternalLabel.Tests.ps1" -Verbose
