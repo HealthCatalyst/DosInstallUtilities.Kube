@@ -38,5 +38,3 @@ class Service {
     [int]$port
     [int]$targetPort
 }
-
-Export-ModuleMember -Function 'Service class'
