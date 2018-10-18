@@ -49,6 +49,8 @@ function GenerateSecretPassword() {
             $mypassword = GeneratePassword
         }
         while (($mypassword -notmatch "^[a-z0-9!.*@\s]+$") -or ($mypassword.Length -lt 8 ))
+
+        Write-Verbose "Setting secret $secretname to [$mypassword]"
         kubectl create secret generic $secretname --namespace=$namespace --from-literal=password=$mypassword
     }
     else {
