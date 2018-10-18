@@ -40,7 +40,7 @@ function SetTcpPortsForStack()
 
         AssertStringIsNotNullOrEmpty $service.servicename
 
-        Write-Verbose "External: Adding TCP port: tcp.$($service.port)=$namespace/$($service.servicename):$($service.targetPort) "
+        Write-Host "External: Adding TCP port: tcp.$($service.port)=$namespace/$($service.servicename):$($service.targetPort) "
 
         $package="nginx"
         helm upgrade "$package" stable/nginx-ingress `
@@ -54,7 +54,7 @@ function SetTcpPortsForStack()
 
         AssertStringIsNotNullOrEmpty $service.servicename
 
-        Write-Verbose "Internal: Adding TCP port: tcp.$($service.port)=$namespace/$($service.servicename):$($service.targetPort) "
+        Write-Host "Internal: Adding TCP port: tcp.$($service.port)=$namespace/$($service.servicename):$($service.targetPort) "
 
         $package="nginx-internal"
         helm upgrade "$package" stable/nginx-ingress `

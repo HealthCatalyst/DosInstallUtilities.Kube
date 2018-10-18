@@ -41,20 +41,19 @@ function GenerateSecretPassword() {
     if ([string]::IsNullOrWhiteSpace($namespace)) { $namespace = "default"}
     if ([string]::IsNullOrWhiteSpace($(kubectl get secret $secretname -n $namespace -o jsonpath='{.data}' --ignore-not-found=true))) {
 
-        Write-Verbose "$secretname not found so generating it"
-        $mysqlrootpassword = ""
+        Write-Host "$secretname not found so generating it"
+        $mypassword = ""
         # MySQL password requirements: https://dev.mysql.com/doc/refman/5.6/en/validate-password-plugin.html
         # we also use sed to replace configs: https://unix.stackexchange.com/questions/32907/what-characters-do-i-need-to-escape-when-using-sed-in-a-sh-script
         Do {
-            $mysqlrootpassword = GeneratePassword
+            $mypassword = GeneratePassword
         }
-        while (($mysqlrootpassword -notmatch "^[a-z0-9!.*@\s]+$") -or ($mysqlrootpassword.Length -lt 8 ))
-        kubectl create secret generic $secretname --namespace=$namespace --from-literal=password=$mysqlrootpassword
+        while (($mypassword -notmatch "^[a-z0-9!.*@\s]+$") -or ($mypassword.Length -lt 8 ))
+        kubectl create secret generic $secretname --namespace=$namespace --from-literal=password=$mypassword
     }
     else {
-        Write-Verbose "$secretname secret already set so will reuse it"
+        Write-Host "$secretname secret already set so will reuse it"
     }
-
 
     Write-Verbose 'GenerateSecretPassword: Done'
     return $Return

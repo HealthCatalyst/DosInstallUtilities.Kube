@@ -30,12 +30,14 @@ function ShowLogsOfAllPodsInNameSpace() {
     )
 
     Write-Verbose 'ShowLogsOfAllPodsInNameSpace: Starting'
-    Write-Information -MessageData "showing logs (last 30 lines) in $namespace"
+
+    Write-Host "showing logs (last 30 lines) in $namespace"
     $pods = $(kubectl get pods -n $namespace -o jsonpath='{.items[*].metadata.name}')
     foreach ($pod in $pods.Split(" ")) {
-        Write-Information -MessageData "=============== Describe Pod: $pod ================="
+        Write-Host "=============== Describe Pod: $pod ================="
         kubectl logs --tail=30 $pod -n $namespace
     }
+
     Write-Verbose 'ShowLogsOfAllPodsInNameSpace: Done'
 
 }

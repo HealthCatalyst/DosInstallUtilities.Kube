@@ -41,7 +41,7 @@ function CleanOutNamespace() {
     # can't delete persistent volume claims since they are not scoped to namespace
     kubectl delete 'pv' -l namespace=$namespace --ignore-not-found=true
 
-    Write-Host -MessageData "Waiting for resources to be deleted"
+    Write-Host "Waiting for resources to be deleted"
     $CLEANUP_DONE = "n"
     $counter = 0
     Do {
