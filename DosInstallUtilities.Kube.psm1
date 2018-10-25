@@ -22,6 +22,7 @@
 . $PSScriptRoot\functions\kubernetes\secrets\ReadSecretPassword.ps1
 . $PSScriptRoot\functions\kubernetes\secrets\WriteSecretPasswordToOutput.ps1
 . $PSScriptRoot\functions\kubernetes\secrets\WriteSecretValueToOutput.ps1
+. $PSScriptRoot\functions\kubernetes\secrets\AskForSecretValue.ps1
 
 # kubernetes\pods
 . $PSScriptRoot\functions\kubernetes\pods\WaitForPodsInNamespace.ps1
