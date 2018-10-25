@@ -57,17 +57,11 @@ function InstallStackInKubernetes() {
         CleanOutNamespace -namespace $namespace
     }
 
-    if ($isOnPrem) {
-        InstallHelmPackage  -namespace $namespace `
-            -package $package `
-            -packageUrl $packageUrl `
-            --set onprem=true
-    }
-    else {
-        InstallHelmPackage  -namespace $namespace `
-            -package $package `
-            -packageUrl $packageUrl
-    }
+    InstallHelmPackage `
+        -namespace $namespace `
+        -package $package `
+        -packageUrl $packageUrl `
+        -isOnPrem $isOnPrem
 
     Write-Verbose 'InstallLoadBalancerHelmPackage: Done'
 
@@ -77,6 +71,7 @@ function InstallStackInKubernetes() {
     SetTcpPortsForStack -namespace $namespace -Verbose
 
     Write-Verbose 'InstallStackInKubernetes: Done'
+
     return $Return
 }
 

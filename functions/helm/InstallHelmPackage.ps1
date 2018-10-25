@@ -37,6 +37,9 @@ function InstallHelmPackage() {
         [ValidateNotNullOrEmpty()]
         [string]
         $packageUrl
+        ,
+        [bool]
+        $isOnPrem = $false
     )
 
     Write-Verbose "InstallHelmPackage: Starting $package"
@@ -53,10 +56,22 @@ function InstallHelmPackage() {
     # https://docs.helm.sh/developing_charts/
 
     Write-Output "Install helm package from $packageUrl"
-    helm install $packageUrl `
-        --name $package `
-        --namespace $namespace `
-        --debug
+
+    if ($isOnPrem)
+    {
+        helm install $packageUrl `
+            --name $package `
+            --namespace $namespace `
+            --set onprem=true `
+            --debug
+    }
+    else
+    {
+        helm install $packageUrl `
+            --name $package `
+            --namespace $namespace `
+            --debug
+    }
 
     Write-Verbose "Listing packages"
     [string] $failedText = $(helm list --failed --output json)
