@@ -35,9 +35,9 @@ function InitHelm()
 
   kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
 
-  helm init --service-account tiller
+  helm init --service-account tiller --wait
 
-  helm init --upgrade --service-account tiller
+  helm init --upgrade --service-account tiller --wait
 
   Write-Host "Sleeping for 5 seconds"
   Start-Sleep -Seconds 5

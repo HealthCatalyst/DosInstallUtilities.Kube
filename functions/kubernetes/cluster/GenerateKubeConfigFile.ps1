@@ -32,7 +32,7 @@ function GenerateKubeConfigFile() {
     [string] $secretname = $(Get-SecretNameForDashboardUser).SecretName
     [string] $ca = $(Get-TokenForDashboardUser).Ca # ca doesn't use base64 encoding
     [string] $token = $(Get-TokenForDashboardUser).Token
-    [string] $namespace = $(ReadSecretData "$secretname" "namespace" "kube-system")
+    [string] $namespace = $(ReadSecretData -secretname "$secretname" -valueName "namespace" -namespace "kube-system")
     [string] $server = $(ReadSecretValue -secretname "dnshostname" -namespace "default")
     [string] $serverurl = "https://${server}:6443"
 
