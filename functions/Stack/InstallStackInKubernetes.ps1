@@ -37,6 +37,9 @@ function InstallStackInKubernetes() {
         [ValidateNotNullOrEmpty()]
         [string]
         $packageUrl
+        ,
+        [bool]
+        $isOnPrem = $false
     )
 
     Write-Verbose 'InstallStackInKubernetes: Starting'
@@ -54,9 +57,17 @@ function InstallStackInKubernetes() {
         CleanOutNamespace -namespace $namespace
     }
 
-    InstallHelmPackage  -namespace $namespace `
-        -package $package `
-        -packageUrl $packageUrl
+    if ($isOnPrem) {
+        InstallHelmPackage  -namespace $namespace `
+            -package $package `
+            -packageUrl $packageUrl `
+            --set onprem=true
+    }
+    else {
+        InstallHelmPackage  -namespace $namespace `
+            -package $package `
+            -packageUrl $packageUrl
+    }
 
     Write-Verbose 'InstallLoadBalancerHelmPackage: Done'
 
