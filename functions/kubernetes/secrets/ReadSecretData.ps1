@@ -1,16 +1,16 @@
 <#
   .SYNOPSIS
   ReadSecretData
-  
+
   .DESCRIPTION
   ReadSecretData
-  
+
   .INPUTS
   ReadSecretData - The name of ReadSecretData
 
   .OUTPUTS
   None
-  
+
   .EXAMPLE
   ReadSecretData
 
@@ -25,19 +25,24 @@ function ReadSecretData() {
     (
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
-        [string] 
+        [string]
         $secretname
-        , 
+        ,
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
-        [string] 
+        [string]
         $valueName
-        , 
-        [string] 
+        ,
+        [string]
         $namespace
     )
 
     Write-Verbose 'ReadSecretData: Starting'
+
+    Set-StrictMode -Version latest
+    # stop whenever there is an error
+    $ErrorActionPreference = "Stop"
+
     if ([string]::IsNullOrWhiteSpace($namespace)) { $namespace = "default"}
 
     [string] $secretbase64 = kubectl get secret $secretname -o jsonpath="{.data.${valueName}}" -n $namespace --ignore-not-found=true 2> $null
@@ -51,7 +56,7 @@ function ReadSecretData() {
     else {
         $secretvalue = ""
     }
-    
+
     Write-Verbose 'ReadSecretData: Done'
     return $secretvalue;
 }
