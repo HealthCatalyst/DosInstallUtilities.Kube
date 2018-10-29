@@ -34,14 +34,16 @@ function AskForSecretValue()
         [string]
         $prompt
         ,
+        [AllowEmptyString()]
         [string]
         $namespace
         ,
+        [AllowEmptyString()]
         [string]
         $defaultvalue
     )
 
-    Write-Verbose 'AskForSecretValue: Starting'
+    Write-Verbose "AskForSecretValue: Starting ($secretname)"
 
     [hashtable]$Return = @{}
 
