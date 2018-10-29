@@ -34,7 +34,7 @@ function InstallLoadBalancerHelmPackage() {
         $ExternalSubnet
         ,
         [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
+        [AllowEmptyString()]
         [string]
         $InternalIP
         ,

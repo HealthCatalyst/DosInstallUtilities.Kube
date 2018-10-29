@@ -46,7 +46,7 @@ function GetLoadBalancerIPs() {
         while ([string]::IsNullOrWhiteSpace($externalIP) -and ($startDate.AddMinutes($timeoutInMinutes) -gt (Get-Date)))
 
         if (![string]::IsNullOrWhiteSpace($externalIP)) {
-            Write-Host " (Found)"
+            Write-Host " (Found: $externalIP)"
         }
         else {
             Write-Host " (Not Found)"
@@ -70,7 +70,7 @@ function GetLoadBalancerIPs() {
         }
         while ([string]::IsNullOrWhiteSpace($internalIP) -and ($startDate.AddMinutes($timeoutInMinutes) -gt (Get-Date)))
         if (![string]::IsNullOrWhiteSpace($internalIP)) {
-            Write-Host " (Found)"
+            Write-Host " (Found: $internalIP)"
         }
         else {
             Write-Host " (Not Found)"
