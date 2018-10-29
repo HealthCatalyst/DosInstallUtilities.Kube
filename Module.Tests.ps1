@@ -66,11 +66,11 @@ Describe "$module Tests" {
                     }
                 }
             }
-            Context "$function has tests" {
-                It "$function.Tests.ps1 should exist" {
-                    "$functionFolder\$function.Tests.ps1" | Should Exist
-                }
-            }
+            # Context "$function has tests" {
+            #     It "$function.Tests.ps1 should exist" {
+            #         "$functionFolder\$function.Tests.ps1" | Should Exist
+            #     }
+            # }
         }
     }
 }
