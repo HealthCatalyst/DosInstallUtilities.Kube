@@ -62,6 +62,8 @@ function InstallLoadBalancerHelmPackage() {
     helm install stable/nginx-ingress `
         --namespace "kube-system" `
         --name "$package" `
+        --set controller.stats.enabled=true `
+        --set controller.extraArgs.enable-ssl-passthrough=""  `
         --set controller.image.tag="$ngniximageTag" `
         --set controller.service.loadBalancerIP="$ExternalIP" `
         --set-string controller.service.labels."$($globals.externalLoadBalancerLabel)"='"'$($globals.externalLoadBalancerLabelValue)'"'
