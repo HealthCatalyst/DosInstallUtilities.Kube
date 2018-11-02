@@ -41,10 +41,8 @@ function GeneratePassword()
         $result += $set3 | Get-Random
         $result += $set4 | Get-Random
     }
-    return $result
-
     Write-Verbose 'GeneratePassword: Done'
-
+    return $result
 }
 
 Export-ModuleMember -Function 'GeneratePassword'
