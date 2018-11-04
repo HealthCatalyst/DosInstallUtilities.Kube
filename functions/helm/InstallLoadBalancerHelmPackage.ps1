@@ -51,8 +51,8 @@ function InstallLoadBalancerHelmPackage() {
     [string] $ngniximageTag = "0.20.0"
 
     Write-Output "Removing old deployment"
-    helm del --purge $package
-    helm del --purge $packageInternal
+    DeleteHelmPackage -package $package
+    DeleteHelmPackage -package $packageInternal
 
     Start-Sleep -Seconds 5
 

@@ -45,7 +45,7 @@ function InstallHelmPackage() {
     Write-Verbose "InstallHelmPackage: Starting $package"
 
     Write-Output "Removing old deployment for $package"
-    helm del --purge $package
+    DeleteHelmPackage -package $package
 
     Start-Sleep -Seconds 5
 

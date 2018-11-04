@@ -51,8 +51,6 @@ function InstallStackInKubernetes() {
         kubectl create namespace $namespace
     }
 
-    Write-Information -MessageData "Installing stack $($config.name) version $($config.version) from $configpath"
-
     if ($namespace -ne "kube-system") {
         CleanOutNamespace -namespace $namespace
     }

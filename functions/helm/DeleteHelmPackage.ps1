@@ -32,7 +32,12 @@ function DeleteHelmPackage()
 
     Write-Verbose 'DeleteHelmPackage: Starting'
 
-    helm del --purge $package
+    [string[]] $installedPackages = $(helm list -q --output json | ConvertFrom-Json)
+
+    if($installedPackages.Contains("$package"))
+    {
+        helm del --purge $package
+    }
 
     Write-Verbose 'DeleteHelmPackage: Done'
 
