@@ -19,8 +19,7 @@ DeleteHelmPackage
 
 
 #>
-function DeleteHelmPackage()
-{
+function DeleteHelmPackage() {
     [CmdletBinding()]
     param
     (
@@ -34,9 +33,10 @@ function DeleteHelmPackage()
 
     [string[]] $installedPackages = $(helm list -q --output json | ConvertFrom-Json)
 
-    if($installedPackages.Contains("$package"))
-    {
-        helm del --purge $package
+    if ($installedPackages) {
+        if ($installedPackages.Contains("$package")) {
+            helm del --purge $package
+        }
     }
 
     Write-Verbose 'DeleteHelmPackage: Done'
