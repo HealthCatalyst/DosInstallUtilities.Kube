@@ -24,7 +24,7 @@ function InstallLoadBalancerHelmPackage() {
     param
     (
         [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
+        [AllowEmptyString()]
         [string]
         $ExternalIP
         ,
@@ -58,15 +58,30 @@ function InstallLoadBalancerHelmPackage() {
 
     # nginx configuration: https://github.com/helm/charts/tree/master/stable/nginx-ingress#configuration
 
-    Write-Verbose "Installing the public nginx load balancer"
-    helm install stable/nginx-ingress `
-        --namespace "kube-system" `
-        --name "$package" `
-        --set controller.stats.enabled=true `
-        --set controller.extraArgs.enable-ssl-passthrough=""  `
-        --set controller.image.tag="$ngniximageTag" `
-        --set controller.service.loadBalancerIP="$ExternalIP" `
-        --set-string controller.service.labels."$($globals.externalLoadBalancerLabel)"='"'$($globals.externalLoadBalancerLabelValue)'"'
+    if(![string]::IsNullOrWhiteSpace($ExternalSubnet)){
+        Write-Verbose "Installing the external nginx load balancer into subnet $ExternalSubnet"
+        helm install stable/nginx-ingress `
+            --namespace "kube-system" `
+            --name "$package" `
+            --set controller.stats.enabled=true `
+            --set controller.extraArgs.enable-ssl-passthrough=""  `
+            --set controller.image.tag="$ngniximageTag" `
+            --set-string controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal"='"true"' `
+            --set-string controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet"='"'$ExternalSubnet'"' `
+            --set controller.service.loadBalancerIP="$ExternalIP" `
+            --set-string controller.service.labels."$($globals.externalLoadBalancerLabel)"='"'$($globals.externalLoadBalancerLabelValue)'"'
+    }
+    else {
+        Write-Verbose "Installing the public nginx load balancer"
+        helm install stable/nginx-ingress `
+            --namespace "kube-system" `
+            --name "$package" `
+            --set controller.stats.enabled=true `
+            --set controller.extraArgs.enable-ssl-passthrough=""  `
+            --set controller.image.tag="$ngniximageTag" `
+            --set controller.service.loadBalancerIP="$ExternalIP" `
+            --set-string controller.service.labels."$($globals.externalLoadBalancerLabel)"='"'$($globals.externalLoadBalancerLabelValue)'"'
+    }
 
     # setting values in helm: https://github.com/helm/helm/blob/master/docs/chart_best_practices/values.md
     # and https://github.com/helm/helm/blob/master/docs/using_helm.md
