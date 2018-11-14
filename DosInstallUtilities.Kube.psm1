@@ -1,5 +1,6 @@
 # classes
 . $PSScriptRoot\classes\Service.ps1
+. $PSScriptRoot\functions\KubeGlobals.ps1
 
 # kubernetes\cluster
 . $PSScriptRoot\functions\kubernetes\cluster\ShowStatusOfCluster.ps1
@@ -62,6 +63,7 @@
 . $PSScriptRoot\functions\helpers\GeneratePassword.ps1
 . $PSScriptRoot\functions\helpers\Test-Script.ps1
 . $PSScriptRoot\functions\helpers\DownloadFile.ps1
+. $PSScriptRoot\functions\helpers\GenerateCertificates.ps1
 
 # config
 . $PSScriptRoot\functions\config\GetConfigFile.ps1

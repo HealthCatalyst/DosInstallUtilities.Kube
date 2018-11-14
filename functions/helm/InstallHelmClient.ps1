@@ -28,7 +28,7 @@ function InstallHelmClient()
 
     Write-Verbose 'InstallHelmClient: Starting'
 
-    [string] $url = $globals.helmInstallUrl
+    [string] $url = $kubeGlobals.helmInstallUrl
     Write-Host "Install Helm client from $url"
 
     Write-Verbose 'InstallHelmClient: Done'

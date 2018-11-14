@@ -17,7 +17,7 @@ Describe "$filename Unit Tests" -Tags 'Unit' {
 
 Describe "$filename Integration Tests" -Tags 'Integration' {
     It "Can install Helm Package for realtime" {
-        $packageUrl = $globals.realtimePackageUrl
+        $packageUrl = $kubeGlobals.realtimePackageUrl
 
         InstallHelmPackage `
             -namespace "fabricrealtime" `

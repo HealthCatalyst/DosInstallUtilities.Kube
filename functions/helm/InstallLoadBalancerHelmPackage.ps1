@@ -69,7 +69,7 @@ function InstallLoadBalancerHelmPackage() {
             --set-string controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal"='"true"' `
             --set-string controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet"='"'$ExternalSubnet'"' `
             --set controller.service.loadBalancerIP="$ExternalIP" `
-            --set-string controller.service.labels."$($globals.externalLoadBalancerLabel)"='"'$($globals.externalLoadBalancerLabelValue)'"'
+            --set-string controller.service.labels."$($kubeGlobals.externalLoadBalancerLabel)"='"'$($kubeGlobals.externalLoadBalancerLabelValue)'"'
     }
     else {
         Write-Verbose "Installing the public nginx load balancer"
@@ -80,7 +80,7 @@ function InstallLoadBalancerHelmPackage() {
             --set controller.extraArgs.enable-ssl-passthrough=""  `
             --set controller.image.tag="$ngniximageTag" `
             --set controller.service.loadBalancerIP="$ExternalIP" `
-            --set-string controller.service.labels."$($globals.externalLoadBalancerLabel)"='"'$($globals.externalLoadBalancerLabelValue)'"'
+            --set-string controller.service.labels."$($kubeGlobals.externalLoadBalancerLabel)"='"'$($kubeGlobals.externalLoadBalancerLabelValue)'"'
     }
 
     # setting values in helm: https://github.com/helm/helm/blob/master/docs/chart_best_practices/values.md
@@ -96,7 +96,7 @@ function InstallLoadBalancerHelmPackage() {
         --set-string controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal"='"true"' `
         --set-string controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet"='"'$InternalSubnet'"' `
         --set controller.service.loadBalancerIP="$InternalIP" `
-        --set-string controller.service.labels."$($globals.internalLoadBalancerLabel)"='"'$($globals.internalLoadBalancerLabelValue)'"'
+        --set-string controller.service.labels."$($kubeGlobals.internalLoadBalancerLabel)"='"'$($kubeGlobals.internalLoadBalancerLabelValue)'"'
 
     Write-Verbose 'InstallLoadBalancerHelmPackage: Done'
 }
