@@ -87,6 +87,8 @@ function InstallLoadBalancerHelmPackage() {
     # and https://github.com/helm/helm/blob/master/docs/using_helm.md
     # use "helm inspect values" to see values
 
+    WaitForLoadBalancerIPByLabel -loadBalancerLabel $kubeGlobals.externalLoadBalancerLabel
+
     Write-Verbose "Installing the internal nginx load balancer"
     # NOTE: helm cannot handle spaces before or after "=" in --set command
     helm install stable/nginx-ingress `

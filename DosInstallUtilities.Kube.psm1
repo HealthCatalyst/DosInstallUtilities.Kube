@@ -32,6 +32,7 @@
 . $PSScriptRoot\functions\kubernetes\pods\ShowStatusOfAllPodsInNameSpace.ps1
 . $PSScriptRoot\functions\kubernetes\pods\ShowLogsOfAllPodsInNameSpace.ps1
 . $PSScriptRoot\functions\kubernetes\pods\ShowSSHCommandsToContainers.ps1
+. $PSScriptRoot\functions\kubernetes\pods\WaitForLoadBalancerIPByLabel.ps1
 
 # kubernetes\ingress
 . $PSScriptRoot\functions\kubernetes\ingress\TroubleshootIngress.ps1
