@@ -57,7 +57,7 @@ function WaitForPodsInNamespace() {
         [string[]] $pods = $podsText.Split(" ")
         foreach ($pod in $pods) {
             [string] $podstatus = $(kubectl get pods $pod -n $namespace -o jsonpath='{.status.phase}')
-            if ($podstatus -eq "Running") {
+            if (("Running" -eq $podstatus) -or ("Succeeded" -eq $podstatus) -or ("Completed" -eq $podstatus)) {
                 # nothing to do
             }
             elseif ($podstatus -eq "Pending") {
@@ -72,7 +72,7 @@ function WaitForPodsInNamespace() {
                             break
                         }
                         else {
-                            $waitingonPodText = "${waitingonPodText}${pod}($containerStatus);"
+                            $waitingonPodText = "${waitingonPodText}${pod}(container:$containerStatus);"
                         }
                     }
                     else {
