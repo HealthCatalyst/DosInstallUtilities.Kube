@@ -52,7 +52,6 @@
 
 # Stack
 . $PSScriptRoot\functions\Stack\Merge-Tokens.ps1
-. $PSScriptRoot\functions\Stack\InstallStackInKubernetes.ps1
 . $PSScriptRoot\functions\Stack\SetTcpPortsForStack.ps1
 
 # helpers
