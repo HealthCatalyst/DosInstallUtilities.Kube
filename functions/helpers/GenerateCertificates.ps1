@@ -77,8 +77,13 @@ function GenerateCertificates() {
         Write-Host "Waiting for certificategenerator pod to complete"
         $result = $(kubectl wait job --for=condition=complete --timeout=30s -l app=certificategenerator -n kube-system)
 
-        Write-Output "Removing deployment for $package"
-        DeleteHelmPackage -package $package
+        Write-Verbose "Waiting for certificates to generate"
+        while ([string]::IsNullOrEmpty($(kubectl get secret fabric-ssl-cert -n kube-system --ignore-not-found=true))) {
+            Start-Sleep -Seconds 1
+        }
+
+        # Write-Output "Removing deployment for $package"
+        # DeleteHelmPackage -package $package
 
         CreateNamespaceIfNotExists -namespace "fabricrealtime"
 
