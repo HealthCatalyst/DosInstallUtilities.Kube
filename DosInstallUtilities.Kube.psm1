@@ -49,6 +49,7 @@
 . $PSScriptRoot\functions\helm\InstallLoadBalancerHelmPackage.ps1
 . $PSScriptRoot\functions\helm\DeleteHelmPackage.ps1
 . $PSScriptRoot\functions\helm\InstallHelmClient.ps1
+. $PSScriptRoot\functions\helm\ListHelmPackages.ps1
 
 # Stack
 . $PSScriptRoot\functions\Stack\Merge-Tokens.ps1
