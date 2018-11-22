@@ -21,6 +21,7 @@
 #>
 function ReadSecretData() {
     [CmdletBinding()]
+    [OutputType([string])]
     param
     (
         [Parameter(Mandatory = $true)]

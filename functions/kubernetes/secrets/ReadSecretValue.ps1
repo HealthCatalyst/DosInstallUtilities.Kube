@@ -36,7 +36,7 @@ function ReadSecretValue() {
     )
 
     Write-Verbose 'ReadSecretValue: Starting'
-    $returnValue = ReadSecretData -secretname $secretname -valueName "value" -namespace $namespace
+    [string] $returnValue = ReadSecretData -secretname $secretname -valueName "value" -namespace $namespace
     Write-Verbose 'ReadSecretValue: Done'
 
     Return $returnValue
