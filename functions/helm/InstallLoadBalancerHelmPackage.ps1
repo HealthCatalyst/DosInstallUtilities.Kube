@@ -69,10 +69,11 @@ function InstallLoadBalancerHelmPackage() {
             --set-string controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal"='"true"' `
             --set-string controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet"='"'$ExternalSubnet'"' `
             --set controller.service.loadBalancerIP="$ExternalIP" `
-            --set-string controller.service.labels."$($kubeGlobals.externalLoadBalancerLabel)"='"'$($kubeGlobals.externalLoadBalancerLabelValue)'"'
+            --set-string controller.service.labels."$($kubeGlobals.externalLoadBalancerLabel)"='"'$($kubeGlobals.externalLoadBalancerLabelValue)'"' `
+            --set controller.extraArgs.default-ssl-certificate="kube-system/fabric-ssl-cert"
     }
     else {
-        Write-Verbose "Installing the public nginx load balancer"
+        Write-Verbose "Installing the external nginx load balancer into public internet"
         helm install stable/nginx-ingress `
             --namespace "kube-system" `
             --name "$package" `
@@ -80,7 +81,8 @@ function InstallLoadBalancerHelmPackage() {
             --set controller.extraArgs.enable-ssl-passthrough=""  `
             --set controller.image.tag="$ngniximageTag" `
             --set controller.service.loadBalancerIP="$ExternalIP" `
-            --set-string controller.service.labels."$($kubeGlobals.externalLoadBalancerLabel)"='"'$($kubeGlobals.externalLoadBalancerLabelValue)'"'
+            --set-string controller.service.labels."$($kubeGlobals.externalLoadBalancerLabel)"='"'$($kubeGlobals.externalLoadBalancerLabelValue)'"' `
+            --set controller.extraArgs.default-ssl-certificate="kube-system/fabric-ssl-cert"
     }
 
     # setting values in helm: https://github.com/helm/helm/blob/master/docs/chart_best_practices/values.md
