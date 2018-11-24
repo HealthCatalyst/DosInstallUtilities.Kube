@@ -100,7 +100,8 @@ function InstallLoadBalancerHelmPackage() {
         --set-string controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal"='"true"' `
         --set-string controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet"='"'$InternalSubnet'"' `
         --set controller.service.loadBalancerIP="$InternalIP" `
-        --set-string controller.service.labels."$($kubeGlobals.internalLoadBalancerLabel)"='"'$($kubeGlobals.internalLoadBalancerLabelValue)'"'
+        --set-string controller.service.labels."$($kubeGlobals.internalLoadBalancerLabel)"='"'$($kubeGlobals.internalLoadBalancerLabelValue)'"' `
+        --set controller.extraArgs.default-ssl-certificate="kube-system/fabric-ssl-cert"
 
     Write-Verbose 'InstallLoadBalancerHelmPackage: Done'
 }
