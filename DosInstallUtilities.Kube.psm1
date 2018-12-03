@@ -77,3 +77,6 @@
 . $PSScriptRoot\functions\dashboard\Get-SecretNameForDashboardUser.ps1
 . $PSScriptRoot\functions\dashboard\Get-UserForDashboard.ps1
 
+# grafana
+. $PSScriptRoot\functions\grafana\InstallGrafana.ps1
+. $PSScriptRoot\functions\grafana\LaunchGrafana.ps1
