@@ -29,7 +29,15 @@ function InstallHelmClient()
     Write-Verbose 'InstallHelmClient: Starting'
 
     [string] $url = $kubeGlobals.helmInstallUrl
-    Write-Host "Install Helm client from $url"
+    Write-Host "Installing Helm client from $url"
+
+    DownloadFile -url $url -targetFile "helm.zip"
+    Start-Sleep -Seconds 5
+
+    Expand-Archive -Path .\helm.zip -DestinationPath "$env:USERPROFILE\.azure-kubectl"
+    Start-Sleep -Seconds 5
+
+    Copy-Item -Path "$env:USERPROFILE\.azure-kubectl\windows-amd64\*" -Destination "$env:USERPROFILE\.azure-kubectl\"
 
     Write-Verbose 'InstallHelmClient: Done'
 }

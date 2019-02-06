@@ -65,6 +65,7 @@
 . $PSScriptRoot\functions\helpers\Test-Script.ps1
 . $PSScriptRoot\functions\helpers\DownloadFile.ps1
 . $PSScriptRoot\functions\helpers\GenerateCertificates.ps1
+. $PSScriptRoot\functions\helpers\AddFolderToPath.ps1
 
 # config
 . $PSScriptRoot\functions\config\GetConfigFile.ps1
